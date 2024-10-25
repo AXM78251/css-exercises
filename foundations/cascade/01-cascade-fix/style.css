@@ -2,14 +2,32 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/*
+  Both paragraphs are extra bolded, so have 
+  the same font weight for both?
+
+  On top of that, smaller paragraph should be
+  smaller, so target this using 2 class selectors 
+  rather than 1?
+
+  So below we are targeting with 1 class selector 
+  .para and since both paragraphs have the same font-weight
+  and color, then we apply both of these attributes to the .para selector
+  On top of that, we assign the font-size to initially be 22px
+
+  Now with the cascase, we now chain two class selectors
+  .para.small-para and we instead target the font size of the 
+  2nd paragraph to be smaller than the original font-size of 22px
+
+  This will work because due to cascading, the specificity of 
+  .para.small-para has 2 classes compared to the specificity of
+  .para which has 1 class, so the declaration with 2 classes
+  will overrule the declaration with 1 class.
+*/
+
 .para,
 .small-para {
   color: hsl(0, 0%, 0%);
-  font-weight: 800;
-}
-
-.small-para {
-  font-size: 14px;
   font-weight: 800;
 }
 
@@ -17,8 +35,24 @@ body {
   font-size: 22px;
 }
 
-.confirm {
-  background: green;
+.small-para {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+
+/* 
+  The problem going on right now is that both .confirm
+  and .button have the same specificity (1 class selector)
+  and in this case .button is declared later, so any conflicts
+  attributed will be determined by the .button values
+
+  We could instead target the .confirm button using an id selector
+  which is more specific than a class selector. 
+*/
+
+#confirm-button {
+  background-color: green;
   color: white;
   font-weight: bold;
 } 
@@ -29,14 +63,32 @@ body {
   font-size: 20px;
 }
 
+/*
+  The current issue is that we want .child to be smaller
+  and extra bolded, however, due to cascading, .child
+  has lower specificity than div.text because each definition has
+  1 class, then when cascading to the next item which is type
+  selector, div.text has 1 type selector (div) compared to .child
+  which has 0 type selectors, so div.text will take precendence
+  over .child
+
+  To fix this, you can move the declaration of the .child
+  element to be lower than div.text and remove the div selector
+  from this declaration such that .text and .child each now have 
+  1 class specificity and therefore .child overrides .text due to
+  it being delcared later. Finally, we can take advantage of 
+  inheritance so that .child inherits color since 
+  the text is of the same color for the parent and child div.
+*/
+
+.text {
+  color: rgb(0, 0, 0);
+  font-size: 22px;
+  font-weight: 100;
+}
+
 .child {
   color: rgb(0, 0, 0);
   font-weight: 800;
   font-size: 14px;
-}
-
-div.text {
-  color: rgb(0, 0, 0);
-  font-size: 22px;
-  font-weight: 100;
 }
